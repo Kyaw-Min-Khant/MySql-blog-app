@@ -1,0 +1,7 @@
+.title {
+  background-image: url("../image/title.jpg");
+  background-size: contain;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}

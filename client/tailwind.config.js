@@ -8,9 +8,10 @@ export default {
       mono: "Lato",
     },
     colors: {
-      brand: "#EBC500",
+      brand: "#05c105ce",
       header: "#2D2B2B",
       normal: "#666565",
+      white: "#fafafa",
     },
     extend: {},
   },

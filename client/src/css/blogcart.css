@@ -1,0 +1,12 @@
+.btn-action {
+  visibility: hidden;
+  transform: translateY(5px);
+  transition-duration: 0.5s;
+  opacity: 0;
+}
+.cart:hover .btn-action {
+  transform: translateY(-5px);
+  visibility: visible;
+  transition-duration: 1s;
+  opacity: 1;
+}
