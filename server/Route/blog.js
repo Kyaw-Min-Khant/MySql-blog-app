@@ -10,7 +10,6 @@ router.post("/", verifyToken, (req, res) => {
     if (err)
       return res.status(403).json({
         data: false,
-        message: err?.sqlMessage,
       });
     res.status(201).json({
       data: true,
@@ -69,10 +68,7 @@ router.get("/:id", (req, res) => {
   let q = "SELECT * FROM Post  WHERE id=?";
   db.query(q, [bookId], (err, data) => {
     if (err) return res.status(err).json({ error: err?.sqlMessage });
-    res.status(200).json({
-      data: false,
-      message: err?.sqlMessage,
-    });
+    res.status(200).json(data);
   });
 });
 
