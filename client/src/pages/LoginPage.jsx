@@ -1,8 +1,10 @@
 import { TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import LoginAnimation from "../Component/Animation/LoginAnimation";
+import { useRegisterMutation } from "../api/userApi";
 
 const LoginPage = () => {
+  const [Login] = useRegisterMutation();
   const form = useForm({
     initialValues: {
       email: "",
@@ -11,6 +13,8 @@ const LoginPage = () => {
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      password: (value) =>
+        value.length >= 4 ? null : "Password must be at least 4 characters",
     },
   });
   return (
@@ -23,7 +27,14 @@ const LoginPage = () => {
             </h2>
             <form
               className=" px-3"
-              onSubmit={form.onSubmit((values) => console.log(values))}
+              onSubmit={form.onSubmit((values) => {
+                try {
+                  const data = Login(values);
+                  console.log(data);
+                } catch (e) {
+                  console.error(e);
+                }
+              })}
             >
               <TextInput
                 withAsterisk
