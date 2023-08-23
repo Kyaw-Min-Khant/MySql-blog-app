@@ -1,30 +1,67 @@
+/* eslint-disable react/prop-types */
 import { AiFillDelete } from "react-icons/ai";
 import { MdEdit } from "react-icons/md";
 import "../css/blogcart.css";
-const BlogCart = () => {
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useDeleteBlogMutation } from "../api/postApi";
+import { useEffect, useState } from "react";
+
+const BlogCart = (props) => {
+  const [deleteBlog] = useDeleteBlogMutation();
+  const nav = useNavigate();
+  const { id, title, content, user_id } = props;
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    try {
+      const user = JSON?.parse(Cookies.get("Info"));
+      setUserId(user);
+    } catch (e) {" "}
+  }, []);
+  const detailPage = () => {
+    nav(`/detail/${id}`, { state: { id } });
+  };
+  const editPage = (e) => {
+    e.stopPropagation();
+    nav(`edit/${id}`, { state: { id } });
+  };
+  console.log(id, user_id);
+  const data = { id, user_id };
+  //Delete Blog
+  const deleteHandler = async (e) => {
+    e.stopPropagation();
+    const check = await deleteBlog(data);
+    console.log(check);
+  };
   return (
     <div className="">
-      <div className=" w-[400px] hover:bg-[#dfdfdffa] duration-[1s] cart px-6 pt-5 pb-2 rounded-md shadow bg-[#ffffff]">
-        <h2 className=" text-lg  font-medium text-header">Hello San tr</h2>
+      <div
+        onClick={detailPage}
+        className=" w-[400px] min-h-[250px] hover:bg-[#dfdfdffa] duration-[1s] cart px-6 pt-5 pb-2 rounded-md shadow bg-[#ffffff]"
+      >
+        <h2 className=" text-lg  font-medium text-header">{title}</h2>
         <div className="h-[135px] overflow-hidden">
           <p className=" font-serif text-sm  text-header font-medium leading-5 tracking-wider">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
-            dolorum debitis blanditiis qui voluptatem. Earum necessitatibus ex
-            aliquam, tempore magni iusto at possimus officia, eaque recusandae,
-            nulla dolorem odit suscipit. Lorem, ipsum dolor sit amet consectetur
-            adipisicing elit. Voluptates laudantium, et facilis dolore laborum
-            rem, repudiandae magni aperiam pariatur voluptas debitis sint illum
-            necessitatibus cupiditate vero nobis sapiente quos totam.
+            {content}
           </p>
         </div>
-        <div className=" mt-2 btn-action flex justify-end items-center  gap-x-5">
-          <button className=" bg-brand hover:bg-brand/70 rounded px-2  py-1">
-            <MdEdit className=" text-xl text-white" />
-          </button>
-          <button className=" border hover:bg-[#ff0000] border-[#ff0000] rounded px-2  py-1">
-            <AiFillDelete className=" hover:text-white text-xl text-[#ff0000]" />
-          </button>
-        </div>
+        {/* checkWriter */}
+        {user_id === userId?.id && (
+          <div className=" mt-2 btn-action flex justify-end items-center  gap-x-5">
+            <button
+              onClick={editPage}
+              className=" bg-brand hover:bg-brand/70 rounded px-2  py-1"
+            >
+              <MdEdit className=" text-xl text-white" />
+            </button>
+            <button
+              onClick={deleteHandler}
+              className=" border hover:bg-[#ff0000] text-[#ff0000] hover:text-white border-[#ff0000] rounded px-2  py-1"
+            >
+              <AiFillDelete className="  text-xl " />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

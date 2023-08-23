@@ -21,8 +21,7 @@ const verifyToken = (req, res, next) => {
 };
 const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
-
-    if (req.user.id == req.body.user_id) {
+    if (req.user.id == req.query.user_id) {
       next();
     } else {
       res.status(403).json({

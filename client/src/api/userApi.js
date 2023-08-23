@@ -4,7 +4,7 @@ export const userApi = createApi({
   reducerPath: "userApi",
   tagTypes: ["auth"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/v1/auth",
+    baseUrl: "http://localhost:4202/auth",
   }),
   endpoints: (builder) => ({
     Login: builder.mutation({
@@ -23,6 +23,15 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["auth"],
     }),
+    Logout: builder.mutation({
+      query: (token) => ({
+        url: "/logout",
+        method: "POST",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      invalidatesTags: ["auth"],
+    }),
   }),
 });
-export const { useLoginMutation, useRegisterMutation } = userApi;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+  userApi;

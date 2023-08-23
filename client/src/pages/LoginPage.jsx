@@ -1,10 +1,14 @@
 import { TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import LoginAnimation from "../Component/Animation/LoginAnimation";
-import { useRegisterMutation } from "../api/userApi";
+import { useLoginMutation } from "../api/userApi";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginPage = () => {
-  const [Login] = useRegisterMutation();
+  const nav = useNavigate();
+  const [Login] = useLoginMutation();
   const form = useForm({
     initialValues: {
       email: "",
@@ -19,6 +23,8 @@ const LoginPage = () => {
   });
   return (
     <div className="flex bg-[#fafafa] justify-center min-h-screen items-center">
+      <Toaster position="top-right" />
+
       <div className="flex bg-[#ffffff] justify-center py-5 shadow-xl rounded-md gap-4 items-center  w-8/12">
         <div className="w-4/12">
           <div className="mx-auto">
@@ -27,10 +33,21 @@ const LoginPage = () => {
             </h2>
             <form
               className=" px-3"
-              onSubmit={form.onSubmit((values) => {
+              onSubmit={form.onSubmit(async (values) => {
                 try {
-                  const data = Login(values);
+                  const { data } = await Login(values);
                   console.log(data);
+                  if (data?.data) {
+                    nav("/");
+                    Cookies.set("User", data?.userData.accessToken, {
+                      expires: 7,
+                    });
+                    Cookies.set("Info", JSON.stringify(data?.userData), {
+                      expires: 7,
+                    });
+                  } else {
+                    toast.error("Login Failed");
+                  }
                 } catch (e) {
                   console.error(e);
                 }
