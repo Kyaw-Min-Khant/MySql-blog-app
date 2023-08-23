@@ -8,8 +8,11 @@ const blog = require("./Route/blog");
 const corsOptions = {
   origin: "http://localhost:5173",
   Credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(cors(corsOptions));
 app.use("/blog", blog);
 app.use("/auth", auth);
