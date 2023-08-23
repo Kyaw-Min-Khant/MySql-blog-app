@@ -10,7 +10,7 @@ router.post("/", verifyToken, (req, res) => {
     if (err)
       return res.status(403).json({
         data: false,
-        message: err.sqlMessage,
+        message: err?.sqlMessage,
       });
     res.status(201).json({
       data: true,
@@ -27,7 +27,7 @@ router.put("/:id", verifyUser, (req, res) => {
     if (err)
       return res.status(403).json({
         data: false,
-        message: err.sqlMessage,
+        message: err?.sqlMessage,
       });
     res.status(200).json({
       data: true,
@@ -43,7 +43,7 @@ router.delete("/:id", verifyUser, (req, res) => {
     if (err)
       return res.status(403).json({
         data: false,
-        message: err.sqlMessage,
+        message: err?.sqlMessage,
       });
     res.status(200).json({
       data: true,
@@ -58,7 +58,7 @@ router.get("/", (req, res) => {
     if (err)
       return res.status(403).json({
         data: false,
-        message: err.sqlMessage,
+        message: err?.sqlMessage,
       });
     res.status(200).json(data);
   });
@@ -68,10 +68,10 @@ router.get("/:id", (req, res) => {
   let bookId = req.params.id;
   let q = "SELECT * FROM Post  WHERE id=?";
   db.query(q, [bookId], (err, data) => {
-    if (err) return res.status(err).json({ error: err.sqlMessage });
+    if (err) return res.status(err).json({ error: err?.sqlMessage });
     res.status(200).json({
       data: false,
-      message: err.sqlMessage,
+      message: err?.sqlMessage,
     });
   });
 });
