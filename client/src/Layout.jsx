@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   return (
     <div>
       <Navigation />
-      <div className="container bg-[#f1efef] mx-auto">{children}</div>
+      <div className="pt-[30px]  lg:container mx-auto">{children}</div>
     </div>
   );
 };

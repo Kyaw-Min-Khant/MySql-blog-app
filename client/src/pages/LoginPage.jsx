@@ -5,10 +5,11 @@ import { useLoginMutation } from "../api/userApi";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import LoadingAnimation from "../Component/Animation/LoadingAnimation";
 
 const LoginPage = () => {
   const nav = useNavigate();
-  const [Login] = useLoginMutation();
+  const [Login, { isLoading }] = useLoginMutation();
   const form = useForm({
     initialValues: {
       email: "",
@@ -21,12 +22,15 @@ const LoginPage = () => {
         value.length >= 4 ? null : "Password must be at least 4 characters",
     },
   });
+  // Loading Component for UserLogin Again and Again
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
   return (
-    <div className="flex bg-[#fafafa] justify-center min-h-screen items-center">
+    <div className="flex bg-[#efefef] justify-center min-h-screen items-center">
       <Toaster position="top-right" />
-
-      <div className="flex bg-[#ffffff] justify-center py-5 shadow-xl rounded-md gap-4 items-center  w-8/12">
-        <div className="w-4/12">
+      <div className="flex bg-[#ffffff] justify-center py-5 shadow-xl rounded-md gap-4 items-center w-11/12  md:w-10/12 lg:w-8/12">
+        <div className=" w-11/12 md:w-4/12">
           <div className="mx-auto">
             <h2 className=" text-3xl text-center font-sans font-semibold">
               Login
@@ -36,9 +40,11 @@ const LoginPage = () => {
               onSubmit={form.onSubmit(async (values) => {
                 try {
                   const { data } = await Login(values);
-                  console.log(data);
                   if (data?.data) {
-                    nav("/");
+                    toast.success("Login successful");
+                    setTimeout(() => {
+                      nav("/login");
+                    }, 1000);
                     Cookies.set("User", data?.userData.accessToken, {
                       expires: 7,
                     });
@@ -79,7 +85,7 @@ const LoginPage = () => {
             </form>
           </div>
         </div>
-        <div className="w-4/12">
+        <div className="w-4/12 hidden  md:block">
           <LoginAnimation />
         </div>
       </div>

@@ -6,6 +6,7 @@ export default {
       sans: "Roboto",
       serif: "Montserrat",
       mono: "Lato",
+      body: "Tilt Prism",
     },
     colors: {
       brand: "#05c105ce",

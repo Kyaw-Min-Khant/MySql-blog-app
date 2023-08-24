@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+//Check Token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (authHeader) {
@@ -19,6 +20,7 @@ const verifyToken = (req, res, next) => {
     });
   }
 };
+//Check User's Token
 const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id == req.query.user_id) {

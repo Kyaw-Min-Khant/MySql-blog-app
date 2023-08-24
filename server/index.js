@@ -5,7 +5,6 @@ require("dotenv").config();
 const cors = require("cors");
 const auth = require("./Route/auth");
 const blog = require("./Route/blog");
-const { verifyToken, verifyUser } = require("./Route/middleware.js"); // Import your custom middleware
 
 const corsOptions = {
   origin: [
@@ -24,6 +23,6 @@ app.use(cors(corsOptions));
 app.use("/blog", blog);
 app.use("/auth", auth);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server is Running");
 });

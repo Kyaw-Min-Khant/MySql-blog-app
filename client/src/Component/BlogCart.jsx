@@ -6,18 +6,27 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDeleteBlogMutation } from "../api/postApi";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const BlogCart = (props) => {
+  //Api Methods
   const [deleteBlog] = useDeleteBlogMutation();
+  //
   const nav = useNavigate();
+  //Data Prop and Handle Cookies undefined
   const { id, title, content, user_id } = props;
   const [userId, setUserId] = useState(null);
   useEffect(() => {
     try {
       const user = JSON?.parse(Cookies.get("Info"));
-      setUserId(user);
-    } catch (e) {" "}
+      setUserId(user?.id);
+    } catch (e) {
+      (" ");
+    }
   }, []);
+  const data = { id, userId };
+
+  //Function
   const detailPage = () => {
     nav(`/detail/${id}`, { state: { id } });
   };
@@ -25,19 +34,27 @@ const BlogCart = (props) => {
     e.stopPropagation();
     nav(`edit/${id}`, { state: { id } });
   };
-  console.log(id, user_id);
-  const data = { id, user_id };
+
   //Delete Blog
   const deleteHandler = async (e) => {
     e.stopPropagation();
-    const check = await deleteBlog(data);
-    console.log(check);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this blog?"
+    );
+    if (confirmed) {
+      const check = await deleteBlog(data);
+      if (check?.data) {
+        toast.success("Deleted blog");
+        nav("/");
+      }
+    }
   };
   return (
     <div className="">
+      <Toaster position="top-right" />
       <div
         onClick={detailPage}
-        className=" w-[400px] min-h-[250px] hover:bg-[#dfdfdffa] duration-[1s] cart px-6 pt-5 pb-2 rounded-md shadow bg-[#ffffff]"
+        className="w-[350px] lg:w-[400px] min-h-[250px] hover:bg-[#dfdfdffa] duration-[1s] cart px-6 pt-5 pb-2 rounded-md shadow bg-[#ffffff]"
       >
         <h2 className=" text-lg  font-medium text-header">{title}</h2>
         <div className="h-[135px] overflow-hidden">
@@ -46,7 +63,7 @@ const BlogCart = (props) => {
           </p>
         </div>
         {/* checkWriter */}
-        {user_id === userId?.id && (
+        {user_id === userId && (
           <div className=" mt-2 btn-action flex justify-end items-center  gap-x-5">
             <button
               onClick={editPage}
