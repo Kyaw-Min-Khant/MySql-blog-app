@@ -1,0 +1,16 @@
+CREATE DATABASE Blog;
+USE Blog;
+
+CREATE TABLE User (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50),
+  email VARCHAR(50) UNIQUE, 
+  password VARCHAR(255)
+);
+
+CREATE TABLE Post (
+  id INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
+  title VARCHAR(50),
+  content VARCHAR(1000),
+  user_id  INT
+);
