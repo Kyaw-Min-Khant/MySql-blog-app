@@ -5,7 +5,7 @@ export const postApi = createApi({
   reducerPath: "postApi",
   tagTypes: ["blog"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4202/blog",
+    baseUrl: "http://localhost:4303/blog",
   }),
   endpoints: (builder) => ({
     createBlog: builder.mutation({
@@ -24,7 +24,6 @@ export const postApi = createApi({
       query: ({ values, bookId }) => {
         const token = Cookies.get("User");
         const { id } = JSON.parse(Cookies.get("Info"));
-        console.log(id);
         return {
           url: `/${bookId}?user_id=${id}`,
           method: "PUT",
@@ -36,10 +35,9 @@ export const postApi = createApi({
     }),
     deleteBlog: builder.mutation({
       query: (data) => {
-        console.log(data);
         const token = Cookies?.get("User");
         return {
-          url: `/${data.id}?user_id=${data.user_id}`,
+          url: `/${data.id}?user_id=${data.userId}`,
           method: "DELETE",
           headers: { authorization: `Bearer ${token}` },
         };

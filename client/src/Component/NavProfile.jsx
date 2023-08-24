@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import { useLogoutMutation } from "../api/userApi";
 import toast, { Toaster } from "react-hot-toast";
 const NavProfile = () => {
+  //Api Method
   const [logout] = useLogoutMutation();
+  //Get User Info
   const token = Cookies.get("User");
   const userName = JSON?.parse(Cookies.get("Info"));
+  //Function
   const logoutHandler = async () => {
     const { data } = await logout(token);
     if (data?.data) {

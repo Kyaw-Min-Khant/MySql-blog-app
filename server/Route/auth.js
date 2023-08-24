@@ -27,9 +27,6 @@ router.post("/login", (req, res) => {
   let q = "SELECT * FROM User WHERE email=?";
   db.query(q, [req.body.email], (err, data) => {
     const user = data[0];
-    // if (err) {
-    //   return res.status(403).json({ data: false, message: "Login Failed" });
-    // }
     if (data.length === 0) {
       return res.status(403).json({ data: false, message: "User NotFound" });
     }
@@ -57,6 +54,7 @@ router.post("/login", (req, res) => {
     res.status(200).json({ data: true, userData });
   });
 });
+//Logout
 router.post("/logout", verifyToken, (req, res) => {
   res.status(200).json({ data: true });
 });
