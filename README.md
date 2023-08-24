@@ -60,3 +60,6 @@ The project uses a MySQL database for storing user and post data. To set up the 
 );
   </li>
 </ul>
+
+#
+![drawSQL-blog-export-2023-08-24](https://github.com/Kyaw-Min-Khant/MySql-blog-app/assets/115208028/ea43972e-7f68-4af5-9863-311e866b650f)
