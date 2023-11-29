@@ -6,11 +6,7 @@ const cors = require("cors");
 const auth = require("./Route/auth");
 const blog = require("./Route/blog");
 
-const corsOption = {
-  origin: "http://localhost:5173",
-  Credentials: true,
-};
-app.use(cors(corsOption));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
