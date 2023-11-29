@@ -4,7 +4,7 @@ export const userApi = createApi({
   reducerPath: "userApi",
   tagTypes: ["auth"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4303/auth",
+    baseUrl: "https://kmk-blog.onrender.com/auth",
   }),
   endpoints: (builder) => ({
     Login: builder.mutation({
