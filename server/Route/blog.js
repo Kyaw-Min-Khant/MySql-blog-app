@@ -54,6 +54,7 @@ router.delete("/:id", verifyUser, (req, res) => {
 router.get("/", (req, res) => {
   let q = "SELECT * FROM Post";
   db.query(q, (err, data) => {
+    console.log(err);
     if (err)
       return res.status(403).json({
         data: false,
