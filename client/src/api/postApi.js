@@ -5,7 +5,7 @@ export const postApi = createApi({
   reducerPath: "postApi",
   tagTypes: ["blog"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://kmk-blog.onrender.com/blog",
+    baseUrl: "http://localhost:4303/blog",
   }),
   endpoints: (builder) => ({
     createBlog: builder.mutation({
