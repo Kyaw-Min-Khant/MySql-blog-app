@@ -1,6 +1,6 @@
 const router = require("express").Router();
 require("dotenv").config();
-const { db } = require("../db.js");
+const { db } = require("../config/db.js");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require("./middleware.js");
