@@ -16,7 +16,9 @@ app.use(
 );
 app.use("/blog", blog);
 app.use("/auth", auth);
-
+app.use("/", (req, res) => {
+  res.status(200).json("Hi FOD Developer!");
+});
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is Running");
 });
