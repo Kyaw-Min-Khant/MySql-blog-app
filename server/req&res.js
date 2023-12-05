@@ -1,9 +1,11 @@
 const successResponse = (status, msg, res) => {
-  res.status(status || 400).json(msg ? msg : { data: "true", msg: "OK" });
+  const responseMsg = msg || { data: "true", msg: "OK" };
+  res.status(status).json(responseMsg);
 };
+
 const errorResponse = (status, msg, res) => {
-  res
-    .status(status || 200)
-    .json(msg ? msg : { data: "false", msg: "Something is wrong" });
+  const responseMsg = msg || { data: "false", msg: "Something is wrong" };
+  res.status(status).json(responseMsg);
 };
+
 module.exports = { successResponse, errorResponse };

@@ -2,7 +2,7 @@ const router = require("express").Router();
 require("dotenv").config();
 const {
   createBlog,
-  updatBlog,
+  updateBlog,
   deleteBlog,
   getBlog,
   singleBlog,
@@ -11,7 +11,7 @@ const { verifyToken } = require("./middleware.js");
 //Create Blog
 router.post("/", verifyToken, createBlog);
 //Update Blog
-router.put("/:id", verifyToken, updatBlog);
+router.put("/:id", verifyToken, updateBlog);
 //Delete Blog
 router.delete("/:id", verifyToken, deleteBlog);
 //Get Blogs
